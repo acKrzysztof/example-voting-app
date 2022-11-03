@@ -17,11 +17,17 @@ pipeline {
         stage('test') {
             steps {
                 echo 'Running tests'
+		        dir('worker'){
+                    sh 'mvn clean test'
+                }
             }
         }
         stage('package') {
             steps {
                 echo 'Creating packages'
+		        dir('worker'){
+                    sh 'mvn package'
+                }
             }
         }
     }
