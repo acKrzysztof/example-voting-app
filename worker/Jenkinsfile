@@ -7,7 +7,6 @@ pipeline {
 
     stages {
         stage('build') {
-            slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
             when{
                 changeset "**/worker/**"
             }
