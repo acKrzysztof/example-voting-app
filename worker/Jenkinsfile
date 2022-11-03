@@ -33,6 +33,8 @@ pipeline {
     }
     post {
         always {
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+
             echo 'Worker pipeline execution completed'
         }
     }
