@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'mvn 3.6'
+    } 
+
+    stages {
+        stage('build') {
+            steps {
+                echo 'Compiling worker app'
+		        dir('worker'){
+                    sh 'mvn compile'
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                echo 'Running tests'
+            }
+        }
+        stage('package') {
+            steps {
+                echo 'Creating packages'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Worker pipeline execution completed'
+        }
+    }
+}
+
