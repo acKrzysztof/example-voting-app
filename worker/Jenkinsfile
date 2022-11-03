@@ -44,7 +44,7 @@ pipeline {
     }
     post {
         always {
-            echo 'Worker pipeline execution completed'
+            echo 'Worker pipeline execution completed :>'
         }
         failure {
             slackSend(message: "Build Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
