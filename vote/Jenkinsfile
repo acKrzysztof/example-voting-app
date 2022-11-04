@@ -21,6 +21,7 @@ pipeline{
             steps{
                 echo 'Running tests vote app'
                 dir('vote'){
+                    sh 'pip install -i requirements'
                     sh 'nosetests -v'
                 }
             }
