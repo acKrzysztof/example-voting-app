@@ -1,9 +1,7 @@
 pipeline {
-    agent any
-    
-    tools {
-        nodejs 'node8.9'
-    } 
+    agent {
+        docker { image '8.9-alpine' }
+    }
 
     stages {
         stage('build') {
