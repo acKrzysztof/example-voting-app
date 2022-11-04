@@ -1,0 +1,40 @@
+pipeline{
+    agent{
+        docker{ image 'python:2.7.16-alpine' }
+    }
+    stages{
+        stage('Build'){
+            when{
+                changeset '**/vote/**'
+            }
+            steps{
+                echo 'Running build vote app'
+                dir('vote'){
+                    sh 'pip install -i requirements.txt'
+                }
+            }
+        }
+        stage('Test'){
+            when{
+                changeset '**/vote**'
+            }
+            steps{
+                echo 'Running tests vote app'
+                dir('vote'){
+                    sh 'nosetests -v'
+                }
+            }
+        }
+    }
+    post{
+        always{
+            echo 'Vote app pipeline completed'
+        }
+        success{
+            slackSend(message: "Build Succedeed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+        failure{
+            slackSend(message: "Build Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+    }
+} 
