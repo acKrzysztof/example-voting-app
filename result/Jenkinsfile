@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'node8.9'
+    } 
+
+    stages {
+        stage('build') {
+            when{
+                changeset "**/result/**"
+            }
+            steps {
+                echo 'Building result app'
+		        dir('result'){
+                    sh 'npm install'
+                }
+            }
+        }
+        stage('test') {
+            when{
+                changeset "**/result/**"
+            }
+            steps {
+                echo 'Running tests'
+		        dir('result'){
+                    sh 'npm install'
+                    sh 'npm test'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Result pipeline execution completed'
+        }
+        failure {
+            slackSend(message: "Build Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+
+        }
+        success {
+            slackSend(message: "Build Succedeed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+
+        }
+    }
+}
+
