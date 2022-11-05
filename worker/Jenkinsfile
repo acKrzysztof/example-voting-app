@@ -46,7 +46,6 @@ pipeline {
                 }
             }
             when{
-                branch 'master'
                 changeset "**/worker/**"
             }
             steps {
@@ -61,16 +60,16 @@ pipeline {
             agent any
             
             when{
-                branch 'master'
                 changeset "**/worker/**"
             }
             steps {
                 echo 'Creating docker image'
                 script {
-                    docker.withRegistry('https://index.docker.io/v1', 'dockerlogin')
-                    def workerImage = docker.build("ackrzysztof/worker:v${env.BUILD_ID}", "./worker")
-                    workerImage.push()
-                    workerImage.push("${env.BRANCH_NAME}")
+                    docker.withRegistry('https://index.docker.io/v1', 'dockerlogin') {
+                        def workerImage = docker.build("ackrzysztof/worker:v${env.BUILD_ID}", "./worker")
+                        workerImage.push()
+                        workerImage.push("${env.BRANCH_NAME}")
+                    }
                 }
             }
         }
