@@ -40,6 +40,7 @@ pipeline{
             agent any
             when{
                 changeset '**/vote/**'
+
             }
             steps{
                 echo 'Create docker image and push'
