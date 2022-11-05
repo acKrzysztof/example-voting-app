@@ -31,7 +31,7 @@ pipeline {
                 }
             }
         }
-        stage('test') {
+        stage('docker imgage build and push') {
             agent any
             when{
                 changeset "**/result/**"
