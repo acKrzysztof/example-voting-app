@@ -46,6 +46,7 @@ pipeline {
                 }
             }
             when{
+                branch 'master'
                 changeset "**/worker/**"
             }
             steps {
@@ -60,6 +61,7 @@ pipeline {
             agent any
             
             when{
+                branch 'master'
                 changeset "**/worker/**"
             }
             steps {
