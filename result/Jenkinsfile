@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 echo 'Create docker image and push'
-                scrpit {
+                script {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
                         def resultImage = docker.build('ackrzysztof/result:v${env.BUILD_ID}', './result')
                         resultImage.push()
