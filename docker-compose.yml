@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  vote:
+    image: ackrzysztof/vote:master
+    ports:
+    - 9091:80
+  
+  result:
+    image: ackrzysztof/result:master
+    ports:
+    - 9092:4000
+  
+  worker:
+    image: ackrzysztof/worker:master
+
+  db:
+    image: postgres:9.4
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_PASSWORD: postgres  
+
+  redis:
+    image: redis:alpine
