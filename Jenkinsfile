@@ -200,9 +200,9 @@ pipeline {
 
     stage('SonarQube'){
       agent any
-      when{
-        branch 'feature-sonar'
-      }
+//      when{
+//        branch 'master'
+//      }
       environment{
         sonarpath = tool 'SonarQube'
       }
